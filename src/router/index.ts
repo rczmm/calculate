@@ -1,15 +1,14 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
+import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
 
 import WelcomeVue from '@/components/Welcome.vue';
 import ExerciseVue from "@/components/Exercise.vue";
 import ReportVue from '@/components/Report.vue';
-import Login from "@/components/Login.vue";
 import {useUserStore} from "@/store/user";
 
 
 const routes: Array<RouteRecordRaw> = [
     {
-        path: '/login',
+        path: '/',
         redirect: '/login',
     },
     {
@@ -49,20 +48,20 @@ const router = createRouter({
 });
 
 // 路由守卫
-// router.beforeEach((to, from, next) => {
-//     const userStore = useUserStore();
-//     userStore.initialize();
-//
-//     if (to.matched.some(record => record.meta.requiresAuth)) {
-//         if (!userStore.user) {
-//             next({name: 'Login'});
-//         } else {
-//             next();
-//         }
-//     } else {
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+    const userStore = useUserStore();
+    userStore.initialize();
+
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!userStore.user) {
+            next({name: 'Login'});
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router;
 
