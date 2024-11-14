@@ -1,0 +1,24 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "editor.tabSize": 2,
+        "scss.lint.unknownAtRules": "ignore",
+        "cSpell.ignorePaths": [
+            "package.json",
+            "pnpm-lock.yaml",
+            "node_modules",
+            "public/copyrights.txt",
+            ".git"
+        ]
+    },
+    "extensions": {
+        "recommendations": [
+            "Vue.volar",
+            "Vue.vscode-typescript-vue-plugin"
+        ]
+    }
+}

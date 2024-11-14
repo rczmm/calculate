@@ -1,0 +1,16 @@
+{
+  "vueCompilerOptions": {
+    "strictTemplates": true
+  },
+  "compilerOptions": {
+    "lib": ["ES2015", "DOM"],
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+  }
+}
