@@ -10,7 +10,7 @@ const router = useRouter();
 const { questions, questionProvider, correctCnt, accumulatedDuration } = useQuestionStore();
 
 function go_to_main_page() {
-  router.push("/");
+  router.push("/welcome");
 }
 
 if (questions.length === 0) {
@@ -20,14 +20,14 @@ if (questions.length === 0) {
 const
   title = questionProvider.get_title(),
   generatedDisplay = (new Date()).toLocaleString(),
-  correctRatio = correctCnt / questions.length,
+  correctRatio = correctCnt / questions.slice(0,-1).length,
   correctRatioDisplay = `${(correctRatio * 100).toFixed(0)}%`,
   durationArray = (() => {
     let arr = questions.map(q => q.get_duration());
     arr.sort((a, b) => a - b);
     return arr;
   })(),
-  avgDuration = (accumulatedDuration / questions.length / 1000).toFixed(3) + "s",
+  avgDuration = (accumulatedDuration / questions.slice(0,-1).length / 1000).toFixed(3) + "s",
   [fastDuration, slowDuration] = (() => {
     if (durationArray.length < 5)
       return [durationArray[0] - 1, durationArray[durationArray.length - 1] + 1];
@@ -67,7 +67,7 @@ const
             <div>正确率</div>
           </div>
           <div class="text-center">
-            <div>{{ questions.length }}</div>
+            <div>{{ questions.length - 1 }}</div>
             <div>题数</div>
           </div>
           <div class="text-right">
@@ -83,7 +83,7 @@ const
           <span class="grow">用时</span>
           <span class="w-8 text-center">结果</span>
         </div>
-        <QuestionNew v-for="(question, i) in questions" :key="`${i}-${question.problem}`"
+        <QuestionNew v-for="(question, i) in questions.slice(0,-1)" :key="`${i}-${question.problem}`"
           :question="question" :num="i + 1" :duration-distribution="durationDistribution">
         </QuestionNew>
       </div>
