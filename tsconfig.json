@@ -7,10 +7,13 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
+    "types": [
+      "element-plus"
+    ],
     "paths": {
       "@/*": ["src/*"]
     },
     "esModuleInterop": true,
-    "downlevelIteration": true,
+    "downlevelIteration": true
   }
 }

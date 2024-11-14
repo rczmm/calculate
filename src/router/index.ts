@@ -15,27 +15,33 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/welcome',
         component: WelcomeVue,
+        meta: {requiresAuth: true},
     },
     {
         path: '/exercise/:category/:params/:quantity',
         component: ExerciseVue,
         props: true,
+        meta: {requiresAuth: true},
     },
     {
         path: '/report',
-        component: ReportVue
+        component: ReportVue,
+        meta: {requiresAuth: true},
     },
     {
         path: '/report-share',
-        component: () => import('@/components/ReportShare.vue')
+        component: () => import('@/components/ReportShare.vue'),
+        meta: {requiresAuth: true},
     },
     {
         path: '/print-question',
         component: () => import('@/components/QuestionsPrint.vue'),
+        meta: {requiresAuth: true},
     },
     {
         path: '/mistakes-collection',
         component: () => import('@/components/MistakesCollection.vue'),
+        meta: {requiresAuth: true},
     },
     {
         path: '/:PathMatch(.*)', // 404
@@ -55,7 +61,8 @@ router.beforeEach((to, from, next) => {
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!userStore.user) {
-            next({name: 'Login'});
+            router.push('login').then(r => {
+            })
         } else {
             next();
         }

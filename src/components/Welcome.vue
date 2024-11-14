@@ -12,8 +12,6 @@ const
     question = useQuestionStore(),
     setting = useSettingStore();
 
-console.log("1111")
-
 const
     router = useRouter(),
     paramsConfig = computed(() => {

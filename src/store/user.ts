@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import {defineStore} from 'pinia';
+import {ref} from 'vue';
 import axios from 'axios';
 
 interface User {
@@ -12,9 +12,18 @@ export const useUserStore = defineStore('user', () => {
     const user = ref<User | null>(null);
 
     async function login(credentials: { username: string; password: string }) {
-        const response = await axios.post('/login', credentials);
-        user.value = response.data;
-        localStorage.setItem('user', JSON.stringify(user.value));
+        const {username, password} = credentials;
+        if (username === 'xfxf' && password === 'xfxf') {
+            user.value = {
+                id: 1,
+                username: 'xfxf',
+                token: 'dummy-token'
+            };
+            localStorage.setItem('user', JSON.stringify(user.value));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function logout() {
@@ -29,5 +38,5 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    return { user, login, logout, initialize };
+    return {user, login, logout, initialize};
 });

@@ -9,7 +9,7 @@
           <label for="username">用户名</label>
           <input
               id="username"
-              v-model="username"
+              v-model="credentials.username"
               type="text"
               placeholder="输入您的用户名"
               required
@@ -20,7 +20,7 @@
           <label for="password">密码</label>
           <input
               id="password"
-              v-model="password"
+              v-model="credentials.password"
               type="password"
               placeholder="输入您的密码"
               required
@@ -41,15 +41,21 @@
 <script lang="ts">
 import {ref} from 'vue';
 import router from "@/router";
+import {useUserStore} from "@/store/user";
+
 
 export default {
   setup() {
-    const username = ref('');
-    const password = ref('');
+    const credentials = ref({username: '', password: ''});
 
-    const handleLogin = () => {
-      // 在此添加登录逻辑
-      router.push("/welcome");
+    const handleLogin = async () => {
+      const userStore = useUserStore();
+      const success = await userStore.login(credentials.value);
+      if (success) {
+        await router.push('/welcome');
+      } else {
+        alert('Login failed. Please check your credentials.');
+      }
     }
     const forgotPassword = () => {
       // 忘记密码的逻辑
@@ -62,8 +68,7 @@ export default {
     };
 
     return {
-      username,
-      password,
+      credentials,
       handleLogin,
       forgotPassword,
       createAccount,
