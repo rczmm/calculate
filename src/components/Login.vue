@@ -57,13 +57,12 @@ export default {
         alert('Login failed. Please check your credentials.');
       }
     }
+
     const forgotPassword = () => {
-      // 忘记密码的逻辑
       alert('请联系管理员重置密码');
     };
 
-    const createAccount = () => {
-      // 创建帐户逻辑
+    const createAccount = async () => {
       alert('跳转到创建帐户页面');
     };
 

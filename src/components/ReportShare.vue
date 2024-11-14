@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 import qrcode from 'qrcode-generator'
 
 import useQuestionStore from '@/store/question';
@@ -7,7 +7,7 @@ import QuestionNew from './report/QuestionShareDisplay.vue';
 
 const router = useRouter();
 
-const { questions, questionProvider, correctCnt, accumulatedDuration } = useQuestionStore();
+const {questions, questionProvider, correctCnt, accumulatedDuration} = useQuestionStore();
 
 function go_to_main_page() {
   router.push("/welcome");
@@ -18,37 +18,37 @@ if (questions.length === 0) {
 }
 
 const
-  title = questionProvider.get_title(),
-  generatedDisplay = (new Date()).toLocaleString(),
-  correctRatio = correctCnt / questions.slice(0,-1).length,
-  correctRatioDisplay = `${(correctRatio * 100).toFixed(0)}%`,
-  durationArray = (() => {
-    let arr = questions.map(q => q.get_duration());
-    arr.sort((a, b) => a - b);
-    return arr;
-  })(),
-  avgDuration = (accumulatedDuration / questions.slice(0,-1).length / 1000).toFixed(3) + "s",
-  [fastDuration, slowDuration] = (() => {
-    if (durationArray.length < 5)
-      return [durationArray[0] - 1, durationArray[durationArray.length - 1] + 1];
-    let oneFifth = Math.floor(durationArray.length / 5);
-    return [
-      durationArray[oneFifth - 1],
-      durationArray[durationArray.length - oneFifth]
-    ];
-  })(),
-  durationDistribution = Object.freeze({
-    min: durationArray[0],
-    max: durationArray[durationArray.length - 1],
-    fast: fastDuration,
-    slow: slowDuration
-  }),
-  qrImg = (() => {
-    const qr = qrcode(0, 'M');
-    qr.addData(`${location.protocol}//${location.host}${location.pathname}`);
-    qr.make();
-    return qr.createImgTag();
-  })();
+    title = questionProvider.get_title(),
+    generatedDisplay = (new Date()).toLocaleString(),
+    correctRatio = correctCnt / questions.slice(0, -1).length,
+    correctRatioDisplay = `${(correctRatio * 100).toFixed(0)}%`,
+    durationArray = (() => {
+      let arr = questions.map(q => q.get_duration());
+      arr.sort((a, b) => a - b);
+      return arr;
+    })(),
+    avgDuration = (accumulatedDuration / questions.slice(0, -1).length / 1000).toFixed(3) + "s",
+    [fastDuration, slowDuration] = (() => {
+      if (durationArray.length < 5)
+        return [durationArray[0] - 1, durationArray[durationArray.length - 1] + 1];
+      let oneFifth = Math.floor(durationArray.length / 5);
+      return [
+        durationArray[oneFifth - 1],
+        durationArray[durationArray.length - oneFifth]
+      ];
+    })(),
+    durationDistribution = Object.freeze({
+      min: durationArray[0],
+      max: durationArray[durationArray.length - 1],
+      fast: fastDuration,
+      slow: slowDuration
+    }),
+    qrImg = (() => {
+      const qr = qrcode(0, 'M');
+      qr.addData(`${location.protocol}//${location.host}${location.pathname}`);
+      qr.make();
+      return qr.createImgTag();
+    })();
 
 </script>
 
@@ -84,7 +84,7 @@ const
           <span class="w-8 text-center">结果</span>
         </div>
         <QuestionNew v-for="(question, i) in questions.slice(0,-1)" :key="`${i}-${question.problem}`"
-          :question="question" :num="i + 1" :duration-distribution="durationDistribution">
+                     :question="question" :num="i + 1" :duration-distribution="durationDistribution">
         </QuestionNew>
       </div>
       <div class="report-card flex items-center justify-between">
@@ -105,13 +105,13 @@ const
 .report-share {
   z-index: 1;
 
-  .overview-line>div {
-    >div:nth-child(1) {
+  .overview-line > div {
+    > div:nth-child(1) {
       @apply text-2xl;
       font-family: fantasy, sans-serif;
     }
 
-    >div:nth-child(2) {
+    > div:nth-child(2) {
       @apply text-sm text-gray-600;
     }
   }

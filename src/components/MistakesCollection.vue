@@ -12,7 +12,7 @@ const { get_mistakes, clear_mistakes } = useMistakesStore();
 const mistakes = get_mistakes();
 
 function go_to_main_page() {
-  router.push("/");
+  router.push("/welcome");
 }
 
 function clear_all() {
@@ -45,28 +45,40 @@ function export_all() {
 <template>
   <div class="mistakes-collection py-4 md:px-8">
     <h2 class="text-2xl font-bold">我的错题本</h2>
-    <table class="mx-auto my-8">
-      <thead>
-        <tr>
-          <th>编号</th>
-          <th class="hidden md:table-cell">时间</th>
-          <th>问题</th>
-          <th>用时</th>
-          <th>标答</th>
-          <th>错误回答</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(mistake, i) in mistakes" :key="i">
-          <td>{{ i + 1 }}</td>
-          <td class="hidden md:table-cell">{{ mistake.time }}</td>
-          <td>{{ mistake.problem }}</td>
-          <td>{{ (mistake.duration / 1000).toFixed(3) }}秒</td>
-          <td class="text-green-700">{{ mistake.correctAnswer }}</td>
-          <td class="text-red-700">{{ mistake.wrongAnswers.join(",") }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="mx-auto my-8">
+      <el-table :data="mistakes" stripe style="width: 100%">
+        <el-table-column prop="index" label="编号" width="80">
+          <template #default="scope">
+            {{ scope.$index + 1 }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="time" label="时间" width="180" :class="{ 'hidden md:table-cell': true }">
+          <template #default="scope">
+            {{ scope.row.time }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="problem" label="问题" min-width="100">
+          <template #default="scope">
+            {{ scope.row.problem }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="duration" label="用时" width="120">
+          <template #default="scope">
+            {{ (scope.row.duration / 1000).toFixed(3) }}秒
+          </template>
+        </el-table-column>
+        <el-table-column prop="correctAnswer" label="标答" width="120">
+          <template #default="scope">
+            <span class="text-green-700">{{ scope.row.correctAnswer }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="wrongAnswers" label="错误回答" min-width="100">
+          <template #default="scope">
+            <span class="text-red-700">{{ scope.row.wrongAnswers.join(", ") }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <div>
       <button type="button" class="btn bg-gray-500 mb-4 mr-4" @click="go_to_main_page">返回主页</button>
       <button type="button" class="btn bg-blue-500 mb-4" @click="export_all">导出记录</button>
