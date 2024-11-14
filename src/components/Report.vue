@@ -6,7 +6,7 @@ import type {Milliseconds} from '@/util';
 
 import QuestionDisplay from './report/QuestionDisplay.vue';
 
-const  router = useRouter();
+const router = useRouter();
 
 
 const {
@@ -25,13 +25,13 @@ const
     title: string = questionProvider.get_title(),
     generatedTime: Date = new Date(),
     generatedTimeDisplay = generatedTime.toLocaleString(),
-    totalQuestions: number = questions.length,
+    totalQuestions: number = questions.length - 1,
     correctRate: number = correctCnt / (totalQuestions || 1),
-    correctRateDisplay: number = (correctRate * 100).toFixed(1) + "%",
+    correctRateDisplay: string = (correctRate * 100).toFixed(1) + "%",
     avgDuration: Milliseconds = accumulatedDuration / (totalQuestions || 1);
 
 function go_to_main_page() {
-  router.push("/");
+  router.push("/welcome");
 }
 
 function go_to_share() {
@@ -60,7 +60,7 @@ function go_to_share() {
 
     <div
         class="mt-4 mx-12 flex flex-wrap content-center justify-center items-center gap-x-6 gap-y-2">
-      <QuestionDisplay v-for="(question, i) in questions" :key="i" :question="question" :i="i">
+      <QuestionDisplay v-for="(question, i) in questions.slice(0,-1)" :key="i" :question="question" :i="i">
       </QuestionDisplay>
     </div>
     <div class="mt-8">

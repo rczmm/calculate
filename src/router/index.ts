@@ -4,12 +4,13 @@ import WelcomeVue from '@/components/Welcome.vue';
 import ExerciseVue from "@/components/Exercise.vue";
 import ReportVue from '@/components/Report.vue';
 import {useUserStore} from "@/store/user";
+import Login from "@/components/Login.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        redirect: '/login',
+        component: Login
     },
     {
         path: '/welcome',
